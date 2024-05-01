@@ -46,6 +46,7 @@ const Diary = () => {
   };
 
   return (
+    <body>
     <section className="section">
         <div className="container">
             <h1 className="title">Diario Personal</h1>
@@ -81,6 +82,42 @@ const Diary = () => {
                             </div>
                         </div>
                         {/* Formulario completo */}
+                        <div className="field">
+                            <label className="label">¿Por qué estás agradecido hoy?</label>
+                            <div className="control">
+                                <textarea
+                                    className="textarea"
+                                    name="gratitude"
+                                    placeholder="Motivos de gratitud..."
+                                    value={entry.gratitude}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">¿Por qué estás agradecido hoy?</label>
+                            <div className="control">
+                                <textarea
+                                    className="textarea"
+                                    name="gratitude"
+                                    placeholder="Motivos de gratitud..."
+                                    value={entry.gratitude}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">¿Por qué estás agradecido hoy?</label>
+                            <div className="control">
+                                <textarea
+                                    className="textarea"
+                                    name="gratitude"
+                                    placeholder="Motivos de gratitud..."
+                                    value={entry.gratitude}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
                         <div className="field">
                             <label className="label">¿Por qué estás agradecido hoy?</label>
                             <div className="control">
@@ -142,6 +179,7 @@ const Diary = () => {
             </div>
         </div>
     </section>
+    </body>
 );
 
   

@@ -166,7 +166,7 @@ const Diario = () => {
                         {diary && (
                             <div className="box mt-4">
                                 <h2 className="title is-4">{diary.titulo}</h2>
-                                <p><strong>Agradecimiento:</strong> {diary.agradecimiento}</p>
+                                <p><strong>Agradecimientos:</strong> {diary.agradecimiento}</p>
                                 <p><strong>Desafíos:</strong> {diary.desafios}</p>
                                 <p><strong>Fecha:</strong> {new Date(diary.fecha).toLocaleDateString()}</p>
                                 <button className="button is-warning mt-3" onClick={updateDiary}>
