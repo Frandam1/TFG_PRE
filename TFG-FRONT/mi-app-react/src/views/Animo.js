@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/Animo.css'
 
 const Animo = () => {
   const [mood, setMood] = useState('');

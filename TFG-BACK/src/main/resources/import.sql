@@ -12,6 +12,11 @@ INSERT INTO Diario(id, titulo, gracias, desafios, fecha) VALUES(1, 'titulo','grc
 INSERT INTO Diario(id, titulo, gracias, desafios, fecha) VALUES(2, 'titulo2','grcias3', 'desafio3', NOW());
 INSERT INTO Diario(id, titulo, gracias, desafios, fecha) VALUES(3, 'titulo4','grcias2', 'desafio4', NOW());
 
+INSERT INTO Animo(id, fecha, animo, motivo) VALUES(1, NOW(),'Feliz', 'reasons varias');
+INSERT INTO Animo(id, fecha, animo, motivo) VALUES(2, NOW(),'Feliz', 'reasons varias');
+INSERT INTO Animo(id, fecha, animo, motivo) VALUES(3, NOW(),'Feliz', 'reasons varias');
+
+
 
 INSERT INTO Tornillo(id, nombre, precio, id_proveedor) VALUES(1, 'Disco duro SATA3 1TB', 86.99, 5);
 INSERT INTO Tornillo(id, nombre, precio, id_proveedor) VALUES(2, 'Memoria RAM DDR4 8GB', 120, 6);
