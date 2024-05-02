@@ -18,8 +18,13 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:3000")
 public class DiaryController {
 
-    @Autowired
     private IDiaryService diaryService;
+
+    public DiaryController(IDiaryService diaryService){
+        this.diaryService = diaryService;
+    }
+//    @Autowired
+//    private IDiaryService diaryService;
 
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
