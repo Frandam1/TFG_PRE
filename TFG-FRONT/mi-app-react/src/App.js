@@ -38,8 +38,8 @@ const App = () => {
         <Route path="/minijuegos" element={<Minijuegos />}/>
 
         
-        <Route path="/minijuegos/ladrillos" component={Ladrillos} />
-        <Route path="/minijuegos/parejas" component={Parejas} /> 
+        <Route path="/minijuegos/ladrillos" element={<Ladrillos />} />
+        <Route path="/minijuegos/parejas" element={<Parejas />} /> 
       </Routes>
     </Router>
   );
