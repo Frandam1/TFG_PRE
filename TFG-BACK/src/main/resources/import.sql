@@ -18,6 +18,9 @@ INSERT INTO Animo(id, fecha, animo, motivo) VALUES(3, NOW(),'Feliz', 'reasons va
 
 INSERT INTO Pensamientos_Negativos(id, pensamiento_negativo, analisis_del_pensamiento, reestructuracion_del_pensamiento, fecha) VALUES(1, 'quiza','pensamietos', 'negativos', NOW());
 
+INSERT INTO biblioteca_tc(id, tecnica, ejemplo_personal, aplicacion, fecha) VALUES(1, 'biblioteca_tctecnica','biblioteca_tcejemplo_personal', 'biblioteca_tcaplicacion', NOW());
+INSERT INTO biblioteca_tc(id, tecnica, ejemplo_personal, aplicacion, fecha) VALUES(2, 'biblioteca_tctecnica2','biblioteca_tcejemplo_personal2', 'biblioteca_tcaplicacion2', NOW());
+
 
 
 INSERT INTO Tornillo(id, nombre, precio, id_proveedor) VALUES(1, 'Disco duro SATA3 1TB', 86.99, 5);

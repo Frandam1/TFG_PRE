@@ -13,9 +13,30 @@
             <button class="list-group-item list-group-item-action" onclick="displayTechnique('desviacion')">Desviación de Pensamientos</button>
             <button class="list-group-item list-group-item-action" onclick="displayTechnique('pruebaRealidad')">Prueba de Realidad</button>
             <button class="list-group-item list-group-item-action" onclick="displayTechnique('busquedaAlternativas')">Búsqueda de Alternativas</button>
-            <!-- Más botones según se requiera -->
         </div>
         <div id="content" class="mt-4"></div>
+
+        <h2 class="text-center my-4">Agregar un Ejemplo Personal</h2>
+        <form id="personalExampleForm" class="mb-4">
+            <div class="mb-3">
+                <label for="techniqueSelect" class="form-label">Selecciona una Técnica</label>
+                <select id="techniqueSelect" class="form-select">
+                    <option value="desviacion">Desviación de Pensamientos</option>
+                    <option value="pruebaRealidad">Prueba de Realidad</option>
+                    <option value="busquedaAlternativas">Búsqueda de Alternativas</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="personalExample" class="form-label">Ejemplo Personal</label>
+                <textarea class="form-control" id="personalExample" rows="3" placeholder="Ingrese su ejemplo personal"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="personalApplication" class="form-label">Aplicación Personal</label>
+                <textarea class="form-control" id="personalApplication" rows="3" placeholder="Ingrese su aplicación personal"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="savePersonalExample()">Guardar Ejemplo</button>
+        </form>
+
         <h2 class="text-center my-4">Tus Ejemplos Guardados</h2>
         <div id="savedEntries" class="mt-4"></div>
     </div>

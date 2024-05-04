@@ -2,7 +2,7 @@
 document.querySelectorAll('.list-group-item').forEach(item => {
     item.addEventListener('click', function(e) {
         e.preventDefault();
-        const technique = this.getAttribute('href').substring(1); // Elimina el '#'
+        const technique = this.innerText.toLowerCase().replace(/\s/g, '');
         displayTechnique(technique);
     });
 });
@@ -26,18 +26,6 @@ function displayTechnique(technique) {
             description: "Consiste en buscar interpretaciones alternativas a los pensamientos negativos, lo que puede ayudarte a ver la situación desde una perspectiva más equilibrada y menos emocional.",
             example: "Si te sientes como un fracaso por no cumplir con una meta, intenta pensar en todas las veces que has tenido éxito.",
             application: "Úsala cuando te sientas abrumado por los fracasos, para recordarte tus éxitos y capacidades."
-        },
-        etiquetadoEmocional: {
-            title: "Etiquetado Emocional",
-            description: "Consiste en identificar y nombrar tus emociones específicas, lo que puede ayudarte a manejarlas de manera más efectiva.",
-            example: "Si te sientes ansioso antes de una presentación, reconócelo diciendo 'Estoy sintiendo ansiedad por esta presentación'.",
-            application: "Es útil para momentos de alta carga emocional, ayudándote a tomar distancia de las emociones y manejarlas con más calma."
-        },
-        perspectivaTerceraPersona: {
-            title: "Perspectiva de Tercera Persona",
-            description: "Implica ver tus propios desafíos desde la perspectiva de un tercero, como si fueras un amigo aconsejándote.",
-            example: "Imagina qué consejo le darías a un amigo en tu misma situación y aplícate ese consejo a ti mismo.",
-            application: "Utiliza esta técnica para reducir el autojuicio y aumentar la compasión hacia ti mismo."
         }
     };
 
@@ -48,11 +36,6 @@ function displayTechnique(technique) {
         <p>${techniqueInfo.description}</p>
         <p><strong>Ejemplo:</strong> ${techniqueInfo.example}</p>
         <p><strong>Aplicación:</strong> ${techniqueInfo.application}</p>
-        <h4>Registra tu ejemplo:</h4>
-        <form onsubmit="saveExample(event, '${technique}')">
-            <textarea class="form-control mb-2" placeholder="Describe cómo aplicaste esta técnica..."></textarea>
-            <button type="submit" class="btn btn-primary">Guardar Ejemplo</button>
-        </form>
     `;
     loadSavedEntries(technique);
 }
@@ -70,15 +53,22 @@ function saveExample(event, technique) {
 function loadSavedEntries(technique) {
     let entries = JSON.parse(localStorage.getItem(technique) || "[]");
     const savedEntries = document.getElementById('savedEntries');
+    const descriptions = {
+        desviacion: "Desviación de Pensamientos",
+        pruebaRealidad: "Prueba de Realidad",
+        busquedaAlternativas: "Búsqueda de Alternativas"
+    };
+    
     savedEntries.innerHTML = entries.map(entry => {
-        const date = new Date(entry.id); // Convertimos el timestamp en un objeto Date
-        const formattedDate = date.toLocaleDateString("es-ES", { // Formateamos la fecha en un formato local
+        const date = new Date(entry.id);
+        const formattedDate = date.toLocaleDateString("es-ES", {
             year: 'numeric', month: 'long', day: 'numeric',
             hour: '2-digit', minute: '2-digit'
         });
         return `
             <div class="card mb-2">
                 <div class="card-body">
+                    <h5>${descriptions[technique]}</h5>
                     <p class="card-text">${entry.text}</p>
                     <button onclick="editEntry('${technique}', ${entry.id})" class="btn btn-warning btn-sm">Editar</button>
                     <button onclick="deleteEntry('${technique}', ${entry.id})" class="btn btn-danger btn-sm">Eliminar</button>
@@ -87,7 +77,6 @@ function loadSavedEntries(technique) {
             </div>`
     }).join('');
 }
-
 
 function editEntry(technique, id) {
     let entries = JSON.parse(localStorage.getItem(technique));
@@ -105,4 +94,21 @@ function deleteEntry(technique, id) {
     entries = entries.filter(entry => entry.id !== id);
     localStorage.setItem(technique, JSON.stringify(entries));
     loadSavedEntries(technique);
+}
+
+function savePersonalExample() {
+    const technique = document.getElementById('techniqueSelect').value;
+    const personalExample = document.getElementById('personalExample').value.trim();
+    const personalApplication = document.getElementById('personalApplication').value.trim();
+
+    if (personalExample && personalApplication && technique) {
+        let entries = JSON.parse(localStorage.getItem(technique) || "[]");
+        entries.push({ text: `Ejemplo: ${personalExample}, Aplicación: ${personalApplication}`, id: Date.now() });
+        localStorage.setItem(technique, JSON.stringify(entries));
+        alert('Ejemplo guardado!');
+        document.getElementById('personalExampleForm').reset();
+        loadSavedEntries(technique);
+    } else {
+        alert('Por favor, complete todos los campos.');
+    }
 }
