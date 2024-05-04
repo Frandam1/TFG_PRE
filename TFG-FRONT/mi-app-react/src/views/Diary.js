@@ -46,7 +46,6 @@ const Diary = () => {
   };
 
   return (
-    <body>
     <section className="section">
         <div className="container">
             <h1 className="title">Diario Personal</h1>
@@ -179,7 +178,7 @@ const Diary = () => {
             </div>
         </div>
     </section>
-    </body>
+   
 );
 
   
