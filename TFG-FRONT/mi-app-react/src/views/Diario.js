@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 const Diario = () => {
     const [diary, setDiary] = useState(null);
@@ -84,6 +85,7 @@ const Diario = () => {
 
     return (
         <section className="section">
+            <Navbar />
             <div className="container">
                 <h1 className="title">Gestión de Diarios</h1>
                 <div className="columns">

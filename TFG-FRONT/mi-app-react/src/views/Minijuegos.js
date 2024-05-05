@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import juego1Img from '../assets/juego1.jpg';
 import juego2Img from '../assets/juego2.jpg';
 import '../styles/Minijuegos.css'
+import Navbar from './Navbar';
 
 const Minijuegos = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Minijuegos = () => {
 
   return (
     <div className="container-mini">
+      <Navbar />
       {juegos.map((juego) => (
         <div
           key={juego.id}

@@ -1,0 +1,25 @@
+/* Estilo base para el contenedor principal */
+.container-home {
+    display: flex;
+    height: 75vh; /* Ajusta la altura según sea necesario */
+}
+
+/* Estilos para el contenedor de bienvenida */
+.bienvenida-container {
+    display: flex;
+    flex-direction: column; /* Alinear el contenido verticalmente */
+    justify-content: center; /* Centrar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    width: 50%;
+    background-color: rgb(7, 99, 122);
+}
+
+/* Estilos para el contenedor de login */
+.login-container {
+    display: flex;
+    flex-direction: column; /* Alinear el contenido verticalmente */
+    justify-content: center; /* Centrar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    width: 50%;
+    background-color: rgb(72, 19, 121);
+}

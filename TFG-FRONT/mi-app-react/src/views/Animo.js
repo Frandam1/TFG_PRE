@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 
 const Animo = () => {
@@ -127,6 +128,7 @@ const Animo = () => {
 
   return (
     <div className="container my-5">
+      <Navbar />
       <h1 className="text-center">Seguimiento del Estado de Ánimo</h1>
       <form className="mb-4" onSubmit={handleSubmit}>
         <div className="mb-3">

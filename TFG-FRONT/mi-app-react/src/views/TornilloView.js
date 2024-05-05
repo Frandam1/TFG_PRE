@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 const TornilloView = () => {
   const [tornillo, setTornillo] = useState(null);
@@ -104,6 +105,7 @@ const eliminarTornillo = async () => {
 
 return (
   <section className="section">
+    <Navbar />
       <div className="container">
           <h1 className="title">Gestión de Tornillos</h1>
           {/* Sección para buscar y actualizar un tornillo existente */}

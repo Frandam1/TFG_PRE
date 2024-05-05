@@ -11,23 +11,13 @@ import BibliotecaTC from './views/BibliotecaTC';
 import Minijuegos from './views/Minijuegos';
 import Parejas from './views/Parejas';
 import Ladrillos from './views/Ladrillos';
+import Navbar from './views/Navbar';
 
 
 const App = () => {
   return (
     <Router>
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-        <div className="navbar-brand">
-          <Link className="navbar-item" to="/">Inicio</Link>
-          <Link className="navbar-item" to="/diario">Diario</Link>
-          <Link className="navbar-item" to="/tornillo">Tornillo</Link> {/* Nuevo enlace a la vista del tornillo */}
-          <Link className="navbar-item" to="/diario2">Diario2</Link>
-          <Link className="navbar-item" to="/estado-animo">Animo</Link>
-          <Link className='navbar-item' to="/biblioteca">Biblioteca TC</Link>
-          <Link className='navbar-item' to="/minijuegos">Minis</Link>
-
-        </div>
-      </nav>
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/diario" element={<Diary />} />

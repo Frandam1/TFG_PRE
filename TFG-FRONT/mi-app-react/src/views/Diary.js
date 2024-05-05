@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from './Navbar';
 
 const Diary = () => {
   const [entry, setEntry] = useState({
@@ -47,6 +48,7 @@ const Diary = () => {
 
   return (
     <section className="section">
+        <Navbar />
         <div className="container">
             <h1 className="title">Diario Personal</h1>
             <div className="columns">

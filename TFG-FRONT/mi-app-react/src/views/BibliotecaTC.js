@@ -1,6 +1,7 @@
 // BibliotecaTC.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 const BibliotecaTC = () => {
   const [technique, setTechnique] = useState('desviacion');
@@ -139,6 +140,7 @@ const BibliotecaTC = () => {
 
   return (
     <div className="container my-5 bg-light">
+      <Navbar />
       <h1 className="text-center mb-4">Biblioteca de Técnicas Cognitivas</h1>
       <div className="list-group">
         <button className="list-group-item list-group-item-action" onClick={() => displayTechnique('desviacion')}>Desviación de Pensamientos</button>
