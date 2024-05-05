@@ -1,0 +1,162 @@
+.diary-container{
+    display: flex;
+    
+    
+}
+
+.diary-column{
+    width: 50%; 
+    
+    padding: 10px;
+    
+}
+
+.diary-column2{
+    width: 50%;
+    
+    padding: 10px;
+    
+}
+
+.diary-box{
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 20px 0; /* Separación vertical entre tarjetas */
+    padding: 20px; /* Espacio interno para el contenido */
+    width: calc(100% - 40px); /* Ocupa todo el ancho disponible excepto el margen */
+    box-sizing: border-box; /* Incluir el padding en el tamaño total */
+    
+}
+
+.diary-box p,
+.diary-box h2 {
+    word-wrap: break-word; /* Ajustar texto largo a la siguiente línea */
+    overflow-wrap: break-word; /* Alternativa para algunos navegadores */
+    white-space: normal; /* Permitir el ajuste de línea */
+    overflow: hidden; /* Evita desbordamiento de contenido */
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos (...) en caso de desbordamiento */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 0 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.pagination-button.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination-button:hover:not(.active) {
+    background-color: #e0e0e0;
+}
+
+/* Estilo para las etiquetas de los campos del diario */
+.diary-label {
+    display: block; /* Asegura que las etiquetas ocupen todo el ancho del contenedor */
+    font-size: 18px; /* Aumenta el tamaño de la fuente */
+    font-weight: bold; /* Hace el texto más negrita para resaltar */
+    margin-bottom: 5px; /* Añade espacio debajo de la etiqueta */
+    color: #333; /* Color oscuro para mejor visibilidad */
+}
+
+/* Otros estilos relacionados */
+.diary-field {
+    margin-bottom: 10px; /* Espacio entre los campos para mejor separación */
+}
+
+.diary-control {
+    display: flex; /* Ayuda a alinear el contenido dentro de los controles */
+    flex-direction: column; /* Asegura que los controles sean apilados verticalmente */
+}
+
+.diary-input,
+.diary-textarea {
+    width: calc(100% - 40px);/* Ocupa el ancho completo del contenedor */
+    padding: 10px; /* Espacio interno alrededor del texto */
+    border-radius: 4px; /* Bordes ligeramente redondeados */
+    border: 1px solid #ccc; /* Color del borde */
+    margin-top: 5px; /* Espacio entre la etiqueta y el campo */
+    box-sizing: border-box; /* Asegura que el padding esté incluido en el ancho total */
+}
+
+/* Contenedor padre para alinear los campos */
+.diary-fields-container {
+    display: flex; /* Usar flexbox para organizar los elementos en línea */
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten si el contenedor es demasiado pequeño */
+    gap: 20px; /* Espacio entre los elementos */
+    margin-bottom: 20px; /* Espacio debajo del contenedor */
+}
+
+/* Estilo para cada campo, asegurando que compartan el ancho */
+.diary-field {
+    flex: 1; /* Cada campo ocupa un espacio igual */
+    min-width: 200px; /* Ancho mínimo para evitar que se compriman demasiado */
+}
+
+.diary-textarea-a{
+    width: calc(100% - 40px);/* Ocupa el ancho completo del contenedor */
+    padding: 10px; /* Espacio interno alrededor del texto */
+    border-radius: 4px; /* Bordes ligeramente redondeados */
+    border: 1px solid #ccc; /* Color del borde */
+    margin-top: 5px; /* Espacio entre la etiqueta y el campo */
+    box-sizing: border-box; 
+    height: 170px;
+}
+
+.diary-textarea-b{
+    width: calc(100% - 40px);/* Ocupa el ancho completo del contenedor */
+    padding: 10px; /* Espacio interno alrededor del texto */
+    border-radius: 4px; /* Bordes ligeramente redondeados */
+    border: 1px solid #ccc; /* Color del borde */
+    margin-top: 5px; /* Espacio entre la etiqueta y el campo */
+    box-sizing: border-box; 
+    height: 170px;
+}
+
+/* Estilos generales para los botones de los diarios */
+.diary-button {
+    display: inline-block; /* Mantener los botones en línea */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    border: none; /* Eliminar bordes */
+    cursor: pointer; /* Mostrar el cursor de puntero */
+    margin-right: 10px; /* Espacio entre botones */
+    font-size: 16px; /* Tamaño de fuente */
+    text-align: center; /* Alinear el texto al centro */
+}
+
+/* Estilo para el botón de guardar diario */
+.diary-button.primary {
+    background-color: #4CAF50; /* Color verde para el botón */
+    color: white; /* Texto blanco */
+}
+
+.diary-button.primary:hover {
+    background-color: #45a049; /* Cambiar el color al pasar el ratón */
+}
+
+/* Estilo para el botón de mostrar todos los diarios */
+.diary-button.secondary {
+    background-color: #007BFF; /* Color azul para el botón */
+    color: white; /* Texto blanco */
+}
+
+.diary-button.secondary:hover {
+    background-color: #0069d9; /* Cambiar el color al pasar el ratón */
+}
+
+
+

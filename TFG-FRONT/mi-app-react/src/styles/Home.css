@@ -2,6 +2,7 @@
 .container-home {
     display: flex;
     height: 75vh; /* Ajusta la altura según sea necesario */
+   
 }
 
 /* Estilos para el contenedor de bienvenida */
@@ -11,7 +12,7 @@
     justify-content: center; /* Centrar verticalmente */
     align-items: center; /* Centrar horizontalmente */
     width: 50%;
-    background-color: rgb(7, 99, 122);
+    background-color: transparent;
 }
 
 /* Estilos para el contenedor de login */
@@ -21,5 +22,21 @@
     justify-content: center; /* Centrar verticalmente */
     align-items: center; /* Centrar horizontalmente */
     width: 50%;
-    background-color: rgb(72, 19, 121);
+    background-color: transparent;
+}
+
+.title-home{
+    color: white;
+    font-weight:bolder;
+    font-size: 4rem;
+    
+
+}
+.p-home{
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+}
+span{
+    color: darkorchid;
 }

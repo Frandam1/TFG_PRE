@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
+import '../styles/Diario.css';
 
 const Diario = () => {
-    const [diary, setDiary] = useState(null);
+    const [diaries, setDiaries] = useState([]);
     const [error, setError] = useState('');
     const [diaryId, setDiaryId] = useState('');
+    const [currentPage, setCurrentPage] = useState(1); // Página actual
+    const diariesPerPage = 2; // Diarios por página
 
     // Estados para el formulario
     const [titulo, setTitulo] = useState('');
@@ -13,18 +16,15 @@ const Diario = () => {
     const [desafios, setDesafios] = useState('');
     const [fecha, setFecha] = useState('');
 
-    const fetchDiaryById = async () => {
+    // Función para obtener todos los diarios
+    const fetchAllDiaries = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/diario/find/${diaryId}`);
-            setDiary(response.data);
-            setTitulo(response.data.titulo);
-            setAgradecimiento(response.data.agradecimiento);
-            setDesafios(response.data.desafios);
-            setFecha(response.data.fecha);
+            const response = await axios.get('http://localhost:8080/api/diario/findAll');
+            setDiaries(response.data);
             setError(''); // Limpiar errores anteriores
         } catch (err) {
-            setError('No se encontró el diario.');
-            setDiary(null); // Limpiar datos previos
+            setError('Error al obtener los diarios.');
+            console.error(err);
         }
     };
 
@@ -44,6 +44,7 @@ const Diario = () => {
                 setAgradecimiento('');
                 setDesafios('');
                 setFecha('');
+                fetchAllDiaries(); // Actualizar la lista de diarios
             }
         } catch (err) {
             setError('Error al guardar el diario');
@@ -51,53 +52,28 @@ const Diario = () => {
         }
     };
 
-    const updateDiary = async () => {
-        try {
-            const response = await axios.put(`http://localhost:8080/api/diario/update/${diaryId}`, {
-                titulo,
-                agradecimiento,
-                desafios,
-                fecha
-            });
-            if (response.status === 200) {
-                alert('Diario actualizado con éxito');
-            }
-        } catch (err) {
-            setError('Error al actualizar el diario');
-            console.error(err);
-        }
-    };
+    // Funciones para manejar la paginación
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const deleteDiary = async () => {
-        try {
-            const response = await axios.delete(`http://localhost:8080/api/diario/delete/${diaryId}`);
-            if (response.status === 200) {
-                alert('Diario eliminado con éxito');
-                setDiary(null); // Limpiar datos del diario
-                setDiaryId(''); // Limpiar el ID del diario
-            }
-        } catch (err) {
-            setError('Error al eliminar el diario');
-            console.error(err);
-        }
-    };
-    
+    // Calcular los diarios a mostrar en la página actual
+    const indexOfLastDiary = currentPage * diariesPerPage;
+    const indexOfFirstDiary = indexOfLastDiary - diariesPerPage;
+    const currentDiaries = diaries.slice(indexOfFirstDiary, indexOfLastDiary);
+    const totalPages = Math.ceil(diaries.length / diariesPerPage);
 
     return (
         <section className="section">
-            <Navbar />
-            <div className="container">
-                <h1 className="title">Gestión de Diarios</h1>
-                <div className="columns">
-                    {/* Columna para el formulario */}
-                    <div className="column is-half">
-                        <form onSubmit={saveDiary}>
-                            <h2 className="title is-4">Nuevo Diario</h2>
-                            <div className="field">
-                                <label className="label">Título</label>
-                                <div className="control">
+            <h1 className="diary-title">Gestión de Diarios</h1>
+            <div className="diary-container">
+                <div className="diary-column">
+                    <form onSubmit={saveDiary}>
+                        <h2 className="diary-subtitle">Nuevo Diario</h2>
+                        <div className="diary-fields-container">
+                            <div className="diary-field">
+                                <label className="diary-label">Título</label>
+                                <div className="diary-control">
                                     <input
-                                        className="input"
+                                        className="diary-input"
                                         type="text"
                                         value={titulo}
                                         onChange={e => setTitulo(e.target.value)}
@@ -106,35 +82,11 @@ const Diario = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="field">
-                                <label className="label">Agradecimiento</label>
-                                <div className="control">
-                                    <textarea
-                                        className="textarea"
-                                        value={agradecimiento}
-                                        onChange={e => setAgradecimiento(e.target.value)}
-                                        placeholder="Motivos de gratitud"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="field">
-                                <label className="label">Desafíos</label>
-                                <div className="control">
-                                    <textarea
-                                        className="textarea"
-                                        value={desafios}
-                                        onChange={e => setDesafios(e.target.value)}
-                                        placeholder="Desafíos enfrentados"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="field">
-                                <label className="label">Fecha</label>
-                                <div className="control">
+                            <div className="diary-field">
+                                <label className="diary-label">Fecha</label>
+                                <div className="diary-control">
                                     <input
-                                        className="input"
+                                        className="diary-input"
                                         type="date"
                                         value={fecha}
                                         onChange={e => setFecha(e.target.value)}
@@ -142,46 +94,67 @@ const Diario = () => {
                                     />
                                 </div>
                             </div>
-                            <button type="submit" className="button is-primary">Guardar Diario</button>
-                        </form>
-                    </div>
-
-                    {/* Columna para la búsqueda y actualizar el diario */}
-                    <div className="column is-half">
-                        <div className="field">
-                            <label className="label">Buscar Diario por ID</label>
-                            <div className="control">
-                                <input
-                                    className="input"
-                                    type="number"
-                                    value={diaryId}
-                                    onChange={e => setDiaryId(e.target.value)}
-                                    placeholder="Introduce el ID del diario"
+                        </div>
+                        <div className="diary-field">
+                            <label className="diary-label">¿Como a ido el dia?</label>
+                            <div className="diary-control">
+                                <textarea
+                                    className="diary-textarea-a"
+                                    value={agradecimiento}
+                                    onChange={e => setAgradecimiento(e.target.value)}
+                                    placeholder="Aqui puedes poner tus vivencias y experiencias personales"
+                                    required
                                 />
                             </div>
-                            <button className="button is-link mt-2" onClick={fetchDiaryById}>
-                                Buscar
-                            </button>
-
                         </div>
-                        {error && <p className="help is-danger">{error}</p>}
-                        {diary && (
-                            <div className="box mt-4">
-                                <h2 className="title is-4">{diary.titulo}</h2>
-                                <p><strong>Agradecimientos:</strong> {diary.agradecimiento}</p>
-                                <p><strong>Desafíos:</strong> {diary.desafios}</p>
-                                <p><strong>Fecha:</strong> {new Date(diary.fecha).toLocaleDateString()}</p>
-                                <button className="button is-warning mt-3" onClick={updateDiary}>
-                                    Actualizar Diario
-                                </button>
-                                <button className="button is-danger mt-3 ml-1" onClick={deleteDiary}>
-                                Eliminar Diario
-                                </button>
+                        <div className="diary-field">
+                            <label className="diary-label">Retos y agradecimientos</label>
+                            <div className="diary-control">
+                                <textarea
+                                    className="diary-textarea-b"
+                                    value={desafios}
+                                    onChange={e => setDesafios(e.target.value)}
+                                    placeholder="Aqui puedes poner si has superado algún desafío inesperado,
+                                    o si agradeces algún acto en particular"
+                                    required
+                                />
                             </div>
-                        )}
+                        </div>
+
+                        <button type="submit" className="diary-button primary">Guardar Diario</button>
+                        <button className="diary-button secondary" onClick={fetchAllDiaries}>
+                            Mostrar Todos los Diarios
+                        </button>
+                    </form>
+                </div>
+                <div className="diary-column2">
+                    <h1 className="diary-title">Mis diarios</h1>
+                    {error && <p className="diary-help error">{error}</p>}
+                    {currentDiaries.length > 0 ? currentDiaries.map((diary) => (
+                        <div className="diary-box" key={diary.id}>
+                            <h2 className="diary-subtitle">{diary.titulo}</h2>
+                            <p><strong>Agradecimientos:</strong> {diary.agradecimiento}</p>
+                            <p><strong>Desafíos:</strong> {diary.desafios}</p>
+                            <p><strong>Fecha:</strong> {new Date(diary.fecha).toLocaleDateString()}</p>
+                        </div>
+                    )) : (
+                        <p>Aqui se mostraran tus diarios pasados</p>
+                    )}
+                    {/* Paginación */}
+                    <div className="pagination">
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => paginate(index + 1)}
+                                className={`pagination-button ${currentPage === index + 1 ? 'active' : ''}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>
+            <Navbar />
         </section>
     );
 };
