@@ -32,9 +32,8 @@ section{
   margin: 0 auto;
   position: initial;
   top: 3rem;
-  right: 0;
   width: 100%;
-  z-index: 1000;
+
   height: 100vh;
   display: flex;
   align-items: center;

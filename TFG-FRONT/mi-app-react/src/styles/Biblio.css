@@ -1,0 +1,41 @@
+.section{
+    background-color: rgb(34, 147, 184);
+}
+
+.prov-form{
+    display: flex;
+    height: 72.5vh; 
+    background-color: rgb(34, 147, 184);
+
+    border-radius: 3rem;
+    width: 100%;
+    
+
+}
+
+.form-biblio{
+    width: 200%;
+    margin-left: 6rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 3%;
+    height: 65vh;
+    background-color: rgb(22, 94, 119);
+ 
+}
+
+.tab-comp{
+    width: 50%;
+}
+
+.data-view {
+    width: 45%;
+    margin-left: 6rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 3%;
+    background-color: rgb(22, 94, 119);
+  }
+  

@@ -1,35 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2'; // Cambiamos Line por Bar
 import 'chart.js/auto';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Navbar from './Navbar';
-
+import '../styles/Animo.css';
 
 const Animo = () => {
   const [mood, setMood] = useState('');
   const [reason, setReason] = useState('');
-  const [moodData, setMoodData] = useState([]);
   const [allMoods, setAllMoods] = useState([]);
-  const [showAllMoods, setShowAllMoods] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const ENTRIES_PER_PAGE = 3;
+  const ENTRIES_PER_PAGE = 2; // Ajuste de la paginación a 2
+
+  useEffect(() => {
+    fetchAllMoods();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const today = new Date().toISOString().slice(0, 10);
-
     try {
       const response = await axios.post('http://localhost:8080/api/mood/save', {
         mood,
         reason,
         date: today
       });
-
       if (response.status === 201) {
         alert('Estado registrado con éxito');
         const newEntry = { mood, reason, date: today };
-        setMoodData([...moodData, newEntry]);
         setAllMoods([...allMoods, newEntry]);
         setMood('');
         setReason('');
@@ -44,47 +42,9 @@ const Animo = () => {
     try {
       const response = await axios.get('http://localhost:8080/api/mood/findAll');
       setAllMoods(response.data);
-      setShowAllMoods(true);
     } catch (error) {
       console.error('Error al obtener los estados:', error);
       alert('Hubo un error al obtener los estados de ánimo. Inténtelo de nuevo.');
-    }
-  };
-
-  const updateMood = async (id, mood) => {
-    const updatedReason = prompt('Actualiza el motivo:', 'Nuevo motivo');
-    const today = new Date().toISOString().slice(0, 10);
-
-    if (updatedReason) {
-      try {
-        const response = await axios.put(`http://localhost:8080/api/mood/update/${id}`, {
-          mood,
-          reason: updatedReason,
-          date: today
-        });
-
-        if (response.status === 200) {
-          alert('Estado actualizado con éxito');
-          setAllMoods(allMoods.map(entry => entry.id === id ? { ...entry, reason: updatedReason, date: today } : entry));
-        }
-      } catch (error) {
-        console.error('Error al actualizar el estado:', error);
-        alert('Hubo un error al actualizar el estado de ánimo. Inténtelo de nuevo.');
-      }
-    }
-  };
-
-  const deleteMood = async (id) => {
-    try {
-      const response = await axios.delete(`http://localhost:8080/api/mood/delete/${id}`);
-      if (response.status === 200) {
-        alert('Estado eliminado con éxito');
-        setAllMoods(allMoods.filter(entry => entry.id !== id));
-        setCurrentPage(1); // Reiniciar la paginación al eliminar
-      }
-    } catch (error) {
-      console.error('Error al eliminar el estado:', error);
-      alert('Hubo un error al eliminar el estado de ánimo. Inténtelo de nuevo.');
     }
   };
 
@@ -109,88 +69,103 @@ const Animo = () => {
         label: 'Estado de Ánimo',
         data: data.map(item => item.y),
         fill: false,
+        backgroundColor: 'rgba(153, 102, 255, 0.6)', // Color violeta semi-transparente
         borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
+        borderWidth: 1
       }]
     };
-  };
+};
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+const options = {
+  scales: {
+    y: 4000
+  },
+  plugins: {
+    legend: {
+      display: true,
+      position: 'top'
+    },
+    tooltip: {
+      enabled: true,
+      mode: 'index',
+      intersect: false
+    }
+  },
+  responsive: true,
+  maintainAspectRatio: false
+};
 
   const indexOfLastEntry = currentPage * ENTRIES_PER_PAGE;
   const indexOfFirstEntry = indexOfLastEntry - ENTRIES_PER_PAGE;
   const currentEntries = allMoods.slice(indexOfFirstEntry, indexOfLastEntry);
   const totalPages = Math.ceil(allMoods.length / ENTRIES_PER_PAGE);
 
-  const toggleVisibility = () => {
-    setShowAllMoods(!showAllMoods);
-  };
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="container my-5">
-      <Navbar />
-      <h1 className="text-center">Seguimiento del Estado de Ánimo</h1>
-      <form className="mb-4" onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="mood" className="form-label">¿Cómo te sientes hoy?</label>
-          <select id="mood" className="form-select" value={mood} onChange={e => setMood(e.target.value)}>
-            <option value="">Selecciona un estado</option>
-            <option value="Muy feliz">Muy feliz</option>
-            <option value="Feliz">Feliz</option>
-            <option value="Neutral">Neutral</option>
-            <option value="Triste">Triste</option>
-            <option value="Muy triste">Muy triste</option>
-            <option value="Ansioso">Ansioso</option>
-          </select>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="reason" className="form-label">¿Por qué te sientes así?</label>
-          <textarea
-            id="reason"
-            className="form-control"
-            placeholder="Describe el motivo de tu estado de ánimo."
-            value={reason}
-            onChange={e => setReason(e.target.value)}
-          ></textarea>
-        </div>
-        <button type="submit" className="btn btn-primary">Registrar Estado</button>
-      </form>
 
-      <button className="btn btn-secondary mt-4" onClick={fetchAllMoods}>
-        Mostrar Todos los Estados
-      </button>
+    <div className="section">
+      <h1 className='animo-h1'>Seccion ya esta bien</h1>
+      <div className='animo-container'>
+        <div className="chart-container">
+          <Bar data={updateChart()} options={options} />
+        </div>
+        <div className='container-form'>
+          <h1 className="text-center">Seguimiento del Estado de Ánimo</h1>
+          <form className="formulario-animo" onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label htmlFor="mood" className="form-label-mood">¿Cómo te sientes hoy?</label>
+              <select id="mood" className="form-select" value={mood} onChange={e => setMood(e.target.value)}>
+                <option value="">Selecciona un estado</option>
+                <option value="Muy feliz">Muy feliz</option>
+                <option value="Feliz">Feliz</option>
+                <option value="Neutral">Neutral</option>
+                <option value="Triste">Triste</option>
+                <option value="Muy triste">Muy triste</option>
+                <option value="Ansioso">Ansioso</option>
+              </select>
+            </div>
+            <div className="form-label-reason">
+              <label htmlFor="reason" className="label-reason">¿Por qué te sientes así?</label>
+              <textarea
+                id="reason"
+                className="form-control"
+                placeholder="Describe el motivo de tu estado de ánimo."
+                value={reason}
+                onChange={e => setReason(e.target.value)}
+              ></textarea>
+            </div>
+            <button type="submit" className="btn btn-primary">Registrar Estado</button>
+          </form>
 
-      {showAllMoods && (
-        <>
           <div id="previousEntries" className="mt-4">
-            <h3>Todos los Registros</h3>
+       
             {currentEntries.map(entry => (
-              <div key={entry.id} className="card mb-2">
+              <div key={entry.id} className="card-animo">
                 <div className="card-body">
                   <p className="card-text">Fecha: {entry.date}, Estado de Ánimo: {entry.mood}, Motivo: {entry.reason}</p>
-                  <button className="btn btn-warning btn-sm me-2" onClick={() => updateMood(entry.id, entry.mood)}>Actualizar</button>
-                  <button className="btn btn-danger btn-sm" onClick={() => deleteMood(entry.id)}>Eliminar</button>
+                  <button type="submit" className="btn-eliminar">Eliminar Estado</button>
                 </div>
               </div>
             ))}
-            {/* Paginación */}
-            <nav className="pagination is-centered mt-3">
-              <ul className="pagination-list">
-                {[...Array(totalPages)].map((_, i) => (
-                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
-                    <button className="pagination-link" onClick={() => paginate(i + 1)}>
-                      {i + 1}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            {totalPages > 1 && (
+              <nav>
+                <ul className='pagination'>
+                  {[...Array(totalPages).keys()].map(number => (
+                    <li key={number + 1} className='page-item'>
+                      <button onClick={() => paginate(number + 1)} className='page-link'>
+                        {number + 1}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
           </div>
-          <div id="moodChartContainer" className="mt-4">
-            <Line data={updateChart()} />
-          </div>
-        </>
-      )}
+
+        </div>
+      </div>
+      <Navbar />
     </div>
   );
 };
